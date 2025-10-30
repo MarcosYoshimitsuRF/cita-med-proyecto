@@ -80,7 +80,7 @@ export default function LoginPage() {
 
     } catch (error) {
       console.error("Error en el login:", error);
-      // Aquí se podría añadir un toast o mensaje de error
+      // Añadimos un mensaje de error al formulario
       form.setError("root", { message: "Email o contraseña incorrectos." });
     }
   }
@@ -122,6 +122,7 @@ export default function LoginPage() {
                   </FormItem>
                 )}
               />
+              {/* Contenedor para el error de login (root) */}
               {form.formState.errors.root && (
                 <p className="text-sm font-medium text-destructive">
                   {form.formState.errors.root.message}
