@@ -1,0 +1,37 @@
+# =========================================================
+# Cita-Med: .gitignore
+# Definido según el Punto 0.3.3 de la documentación.
+# =========================================================
+
+# Ignorar archivos del IDE (IntelliJ, VS Code)
+.idea/
+*.iml
+.vscode/
+
+# Ignorar archivos compilados de Java (Spring Boot)
+# Requerido por el Punto 0.3.3 
+/target/
+*.class
+*.jar
+*.war
+
+# Ignorar archivos de registro (Logging)
+*.log
+
+# Ignorar archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Ignorar dependencias de Node.js (Frontend)
+# Requerido por el Punto 0.3.3 
+/node_modules/
+.next/
+
+# Ignorar archivos de entorno (Contienen secretos)
+.env
+.env.local
+.env.production
+
+# Ignorar archivos de build del frontend
+/dist/
+/build/
