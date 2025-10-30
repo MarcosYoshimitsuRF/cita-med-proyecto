@@ -3,27 +3,34 @@ package com.citamed.api.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.sql.Time;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "Usuarios")
+@Table(name = "Horarios_Medicos", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"id_medico", "dia_semana"})
+})
 @Data
 @NoArgsConstructor
-public class Usuario {
+public class HorarioMedico {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_usuario;
+    private Integer id_horario;
 
-    @Column(nullable = false, unique = true, length = 100)
-    private String email;
+    // Relación N:1 con Medico
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_medico", nullable = false)
+    private Medico medico;
 
-    @Column(name = "password_hash", nullable = false, length = 100)
-    private String passwordHash;
+    @Column(name = "dia_semana", nullable = false)
+    private byte diaSemana; // TINYINT (1=Lunes ... 7=Domingo)
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Rol rol;
+    @Column(name = "hora_inicio", nullable = false)
+    private Time horaInicio;
+
+    @Column(name = "hora_fin", nullable = false)
+    private Time horaFin;
 
     @Column(name = "esta_activo", nullable = false)
     private boolean estaActivo = true;
@@ -33,12 +40,6 @@ public class Usuario {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-    // Enum anidado para el rol
-    public enum Rol {
-        ADMIN,
-        PACIENTE
-    }
 
     @PrePersist
     protected void onCreate() {

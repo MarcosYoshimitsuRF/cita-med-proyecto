@@ -6,24 +6,28 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "Usuarios")
+@Table(name = "Medicos")
 @Data
 @NoArgsConstructor
-public class Usuario {
+public class Medico {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_usuario;
+    private Integer id_medico;
 
-    @Column(nullable = false, unique = true, length = 100)
-    private String email;
+    @Column(nullable = false, length = 100)
+    private String nombres;
 
-    @Column(name = "password_hash", nullable = false, length = 100)
-    private String passwordHash;
+    @Column(nullable = false, length = 100)
+    private String apellidos;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Rol rol;
+    @Column(nullable = false, length = 100)
+    private String especialidad;
+
+    // Relación N:1 con Consultorio
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_consultorio_asignado") // es 'nullable' por defecto
+    private Consultorio consultorioAsignado;
 
     @Column(name = "esta_activo", nullable = false)
     private boolean estaActivo = true;
@@ -33,12 +37,6 @@ public class Usuario {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-    // Enum anidado para el rol
-    public enum Rol {
-        ADMIN,
-        PACIENTE
-    }
 
     @PrePersist
     protected void onCreate() {
